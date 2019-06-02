@@ -1,4 +1,4 @@
-import * as uuid from 'node-uuid';
+import * as nodeUuid from 'node-uuid';
 
 import { ICartInput, ICartItem, ICartItemAll } from '../interfaces/cart.interface';
 
@@ -23,25 +23,27 @@ export class Cart {
       }, 0) as number;
   }
 
-  has(id: number): boolean {
+  public has(id: number): boolean {
     return !!Array.from(this.myItems)
       .filter((item: ICartItem) => item.id === id).length;
   }
 
-  getItemById(id: number): ICartItem {
+  public getItemById(id: number): ICartItem {
     return Array.from(this.myItems)
       .filter((item: ICartItem) => item.id === id)[0] as ICartItem;
   }
 
-  getItemByUuid(uuid: string): ICartItem {
+  public getItemByUuid(uuid: string): ICartItem {
     return Array.from(this.myItems)
       .filter((item: ICartItem) => item.uuid === uuid)[0] as ICartItem;
   }
 
-  add(item: ICartInput): void {
+  public add(item: ICartInput): void {
     if (!this.has(item.id)) {
-      item['uuid'] = uuid.v1();
+      /* tslint:disable:no-string-literal */
+      item['uuid'] = nodeUuid.v1();
       item['subTotal'] = item.quantity * item.price;
+      /* tslint:enable:no-string-literal */
       this.myItems.add(item);
     } else {
       const itemToUpdate = Array.from(this.myItems)
@@ -50,11 +52,11 @@ export class Cart {
       itemToUpdate.quantity = itemToUpdate.quantity + item.quantity;
       itemToUpdate.subTotal = itemToUpdate.quantity * itemToUpdate.price;
 
-      this.myItems.add(itemToUpdate)
+      this.myItems.add(itemToUpdate);
     }
   }
 
-  remove(uuid: string): void {
+  public remove(uuid: string): void {
     const itemToRemove = Array.from(this.myItems)
       .filter((item: ICartItem) => item.uuid === uuid)[0];
 
