@@ -1,0 +1,29 @@
+{
+  "name": "poker-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node ./src/index.ts",
+    "test": "mocha './src/**/*.spec.ts' --opts ./mocha.opts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "@types/node": "^11.13.0",
+    "@types/sinon": "^7.0.11",
+    "@types/uuid": "^3.4.4",
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
+    "sinon": "^7.3.2",
+    "sinon-register": "^1.0.1",
+    "ts-node": "^8.0.3",
+    "typescript": "^3.4.1"
+  },
+  "dependencies": {
+    "node-uuid": "^1.4.8"
+  }
+}
