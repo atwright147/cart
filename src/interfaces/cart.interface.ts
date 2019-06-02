@@ -1,3 +1,10 @@
+export interface ICartInput {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
 export interface ICartItem {
   id: number;
   uuid: string;

@@ -5,7 +5,7 @@ import * as uuid from 'node-uuid';
 import { Cart } from './cart';
 
 describe('Cart', () => {
-  let cart;
+  let cart: Cart;
   let sandbox;
   const mockUuid1 = 'mock0001-84b9-11e9-bef4-d1cc3df89c2f';
   const mockUuid2 = 'mock0002-84b9-11e9-bef4-d1cc3df89c2f';
