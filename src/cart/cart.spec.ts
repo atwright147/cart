@@ -31,12 +31,14 @@ describe('Cart', () => {
     it('should return boolean true if item exists', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+
       expect(cart.has(2)).to.equal(true);
     });
 
     it('should return boolean false if item does not exist', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+
       expect(cart.has(3)).to.equal(false);
     });
   });
@@ -87,7 +89,6 @@ describe('Cart', () => {
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
 
-      expect(cart.length).to.equal(3);
       cart.remove(mockUuid2);
       expect(cart.length).to.equal(2);
     });
@@ -122,7 +123,7 @@ describe('Cart', () => {
           { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 },
         ],
         total: 20,
-      }
+      };
 
       expect(cart.all).to.deep.equal(expected);
     });
