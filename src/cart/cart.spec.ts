@@ -45,22 +45,39 @@ describe('Cart', () => {
     it('should generate a uuid', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
 
-      expect(cart.all[0]).to.have.property('uuid', mockUuid1);
+      expect(cart.all.items[0]).to.have.property('uuid', mockUuid1);
     });
 
-    it('given the item is not currently in the cart, should add a new item per call ', () => {
-      expect(cart.length).to.equal(0);
-      cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
-      expect(cart.length).to.equal(1);
-      cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
-      expect(cart.length).to.equal(2);
+    describe('given the item is already present in the cart', () => {
+      it('should update the quantity of the existing item', () => {
+        cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
+        cart.add({ id: 1, name: 'Item 1', quantity: 3, price: 10 });
+
+        expect(cart.getItemByUuid(mockUuid1)).to.have.property('quantity', 4);
+      });
+
+      it('should calculate and overwrite the sub-total', () => {
+        cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
+        cart.add({ id: 1, name: 'Item 1', quantity: 2, price: 10 });
+
+        expect(cart.all.items[0]).to.have.property('subTotal', 30);
+      });
     });
 
-    it('given the item is currently in the cart, should update the quantity of the existing item', () => {
-      cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
-      cart.add({ id: 1, name: 'Item 1', quantity: 3, price: 10 });
+    describe('given the item is not already present in the cart', () => {
+      it('should add a new item', () => {
+        expect(cart.length).to.equal(0);
+        cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
+        expect(cart.length).to.equal(1);
+        cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+        expect(cart.length).to.equal(2);
+      });
 
-      expect(cart.getItemByUuid(mockUuid1)).to.have.property('quantity', 4);
+      it('should calculate and append a sub-total', () => {
+        cart.add({ id: 1, name: 'Item 1', quantity: 2, price: 10 });
+
+        expect(cart.all.items[0]).to.have.property('subTotal', 20);
+      });
     });
   });
 
@@ -98,10 +115,13 @@ describe('Cart', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
 
-      const expected = [
-        { id: 1, uuid: mockUuid1, name: 'Item 1', quantity: 1, price: 10 },
-        { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10 },
-      ];
+      const expected = {
+        items: [
+          { id: 1, uuid: mockUuid1, name: 'Item 1', quantity: 1, price: 10, subTotal: 10 },
+          { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 },
+        ],
+        total: 20,
+      }
 
       expect(cart.all).to.deep.equal(expected);
     });
@@ -113,7 +133,7 @@ describe('Cart', () => {
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
 
-      const expected = { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10 };
+      const expected = { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
 
       expect(cart.getItemById(2)).to.deep.equal(expected);
     });
@@ -125,7 +145,7 @@ describe('Cart', () => {
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
 
-      const expected = { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10 };
+      const expected = { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
 
       expect(cart.getItemByUuid(mockUuid2)).to.deep.equal(expected);
     });

@@ -1,6 +1,6 @@
 import * as uuid from 'node-uuid';
 
-import { ICartItem } from '../interfaces/cart-item.interface';
+import { ICartItem, ICartItemAll } from '../interfaces/cart.interface';
 
 export class Cart {
   private myItems = new Set();
@@ -9,8 +9,10 @@ export class Cart {
     return this.myItems.size;
   }
 
-  get all(): ICartItem[] {
-    return Array.from(this.myItems) as ICartItem[];
+  get all(): ICartItemAll {
+    const items = Array.from(this.myItems) as ICartItem[];
+    const total = this.total;
+    return { items, total };
   }
 
   get total(): number {
@@ -39,12 +41,14 @@ export class Cart {
   add(item: ICartItem): void {
     if (!this.has(item.id)) {
       item.uuid = uuid.v1();
+      item.subTotal = item.quantity * item.price;
       this.myItems.add(item);
     } else {
       const itemToUpdate = Array.from(this.myItems)
         .filter((existingItem: ICartItem) => item.id === existingItem.id)[0] as ICartItem;
 
       itemToUpdate.quantity = itemToUpdate.quantity + item.quantity;
+      itemToUpdate.subTotal = itemToUpdate.quantity * itemToUpdate.price;
 
       this.myItems.add(itemToUpdate)
     }

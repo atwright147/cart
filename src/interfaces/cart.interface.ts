@@ -4,4 +4,10 @@ export interface ICartItem {
   name: string;
   price: number;
   quantity: number;
+  subTotal: number;
+}
+
+export interface ICartItemAll {
+  items: ICartItem[];
+  total: number;
 }
