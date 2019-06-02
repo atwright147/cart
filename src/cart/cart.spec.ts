@@ -86,6 +86,7 @@ describe('Cart', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
+
       expect(cart.length).to.equal(3);
       cart.remove(mockUuid2);
       expect(cart.length).to.equal(2);
@@ -134,7 +135,6 @@ describe('Cart', () => {
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
 
       const expected = { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
-
       expect(cart.getItemById(2)).to.deep.equal(expected);
     });
   });
@@ -146,7 +146,6 @@ describe('Cart', () => {
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
 
       const expected = { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
-
       expect(cart.getItemByUuid(mockUuid2)).to.deep.equal(expected);
     });
   });
