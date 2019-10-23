@@ -1,10 +1,3 @@
-# Bolierplate for TypeScript
+# Shopping Cart
 
-A boilerplate to help as a starting point to build stuff with TypeScript.
-
-## Set up
-
-1. `cd` into the folder you cloned this project into
-1. `npm install`
-1. To try it out `npm start`
-1. To run the tests `npm test`
+A simple shopping cart for Node or Browser, written in TypeScript
