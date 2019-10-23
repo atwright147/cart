@@ -1,4 +1,7 @@
 --require=ts-node/register
 --require=chai/register-expect
 --require=sinon-register
+--require source-map-support/register
+--recursive
+
 --require=./test/setup.js
