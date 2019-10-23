@@ -12,18 +12,18 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@types/chai": "^4.1.7",
-    "@types/mocha": "^5.2.6",
-    "@types/node": "^11.13.0",
-    "@types/sinon": "^7.0.11",
-    "@types/uuid": "^3.4.4",
+    "@types/chai": "^4.2.4",
+    "@types/mocha": "^5.2.7",
+    "@types/node": "^12.11.5",
+    "@types/sinon": "^7.5.0",
+    "@types/uuid": "^3.4.5",
     "chai": "^4.2.0",
-    "mocha": "^6.0.2",
-    "sinon": "^7.3.2",
+    "mocha": "^6.2.2",
+    "sinon": "^7.5.0",
     "sinon-register": "^1.0.1",
-    "ts-node": "^8.0.3",
-    "tslint": "^5.17.0",
-    "typescript": "^3.4.1"
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.4"
   },
   "dependencies": {
     "node-uuid": "^1.4.8"
