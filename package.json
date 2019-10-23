@@ -1,7 +1,7 @@
 {
-  "name": "poker-ts",
+  "name": "shopping-cart-ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple shopping cart for Node or Browser, written in TypeScript",
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/index.ts",
