@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
     "test": "nyc mocha './src/**/*.spec.ts' --opts ./mocha.opts"
   },
   "keywords": [],
