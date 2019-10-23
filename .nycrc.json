@@ -1,4 +1,9 @@
 {
+  "check-coverage": true,
+  "lines": 95,
+  "functions": 95,
+  "branches": 95,
+  "statements": 95,
   "reporter": [
     "html",
     "text-summary"
@@ -18,6 +23,5 @@
   ],
   "sourceMap": true,
   "instrument": true,
-  "check-coverage": false,
   "cache": true
 }
