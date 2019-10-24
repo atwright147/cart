@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "coverage:lcov": "nyc report --reporter=text-lcov > ./coverage/lcov.info",
+    "coverage:lcov": "nyc report --reporter=lcovonly",
     "coverage:json": "nyc report --reporter=json",
     "coverage": "npm run coverage:lcov && npm run coverage:json",
     "test": "nyc mocha './src/**/*.spec.ts' --opts ./mocha.opts"
