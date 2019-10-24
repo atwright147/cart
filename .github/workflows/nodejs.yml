@@ -33,7 +33,7 @@ jobs:
         npm test
         npm run coverage
         # /home/runner/work/shopping-cart-ts/shopping-cart-ts/src/cart/cart.ts
-        sed -i "s|SF:/.*/src/|SF:src/|g" test-reports/lcov.info
+        sed -i "s|SF:/.*/src/|SF:/github/workspace/src/|g" test-reports/lcov.info
       env:
         CI: true
 
