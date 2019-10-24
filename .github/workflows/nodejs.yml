@@ -25,7 +25,7 @@ jobs:
       with:
         node-version: 12.x
 
-    - name: npm install, lint, build, and test
+    - name: npm install, lint, build, test and prepare coverage reports
       run: |
         npm ci
         npm run lint --if-present
