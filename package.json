@@ -6,6 +6,7 @@
   "scripts": {
     "start": "ts-node ./src/index.ts",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "typecheck": "tsc --noEmit",
     "coverage:lcov": "nyc report --reporter=lcovonly",
     "coverage:json": "nyc report --reporter=json",
     "coverage": "npm run coverage:lcov && npm run coverage:json",
