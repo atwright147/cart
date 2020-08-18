@@ -1,5 +1,5 @@
 {
-  "name": "shopping-cart-ts",
+  "name": "@atwright147/cart",
   "version": "1.0.0",
   "description": "A simple shopping cart for Node or Browser, written in TypeScript",
   "main": "index.js",
@@ -13,7 +13,7 @@
     "test": "cross-env NODE_ENV=test nyc mocha --exit"
   },
   "keywords": [],
-  "author": "",
+  "author": "Andy Wright <atwright147+oss@gmail.com",
   "license": "MIT",
   "devDependencies": {
     "@types/mocha": "^8.0.3",
