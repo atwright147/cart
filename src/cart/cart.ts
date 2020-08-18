@@ -3,7 +3,7 @@ import * as nodeUuid from 'node-uuid';
 import { ICartInput, ICartItem, ICartItemAll } from '../interfaces/cart.interface';
 
 export class Cart {
-  private myItems = new Set();
+  private myItems = new Set<ICartItem>();
 
   get length(): number {
     return this.myItems.size;
@@ -40,11 +40,13 @@ export class Cart {
 
   public add(item: ICartInput): void {
     if (!this.has(item.id)) {
-      /* tslint:disable:no-string-literal */
-      item['uuid'] = nodeUuid.v1();
-      item['subTotal'] = item.quantity * item.price;
-      /* tslint:enable:no-string-literal */
-      this.myItems.add(item);
+      const itemToAdd: ICartItem = {
+        ...item,
+        uuid: nodeUuid.v1(),
+        subTotal: item.quantity * item.price,
+      };
+
+      this.myItems.add(itemToAdd);
     } else {
       const itemToUpdate = Array.from(this.myItems)
         .filter((existingItem: ICartItem) => item.id === existingItem.id)[0] as ICartItem;

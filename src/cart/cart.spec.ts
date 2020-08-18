@@ -1,15 +1,15 @@
 import { expect } from 'chai';
-import * as uuid from 'node-uuid';
-import * as sinon from 'sinon';
+import uuid from 'node-uuid';
+import sinon from 'sinon';
 
 import { Cart } from './cart';
 
 describe('Cart', () => {
   let cart: Cart;
   let sandbox: sinon.SinonSandbox;
-  const mockUuid1 = 'mock0001-84b9-11e9-bef4-d1cc3df89c2f';
-  const mockUuid2 = 'mock0002-84b9-11e9-bef4-d1cc3df89c2f';
-  const mockUuid3 = 'mock0003-84b9-11e9-bef4-d1cc3df89c2f';
+  const mockUuid1 = 'mock0001-84b9-11e9-bef4-d1cc3df89c2f' as any;
+  const mockUuid2 = 'mock0002-84b9-11e9-bef4-d1cc3df89c2f' as any;
+  const mockUuid3 = 'mock0003-84b9-11e9-bef4-d1cc3df89c2f' as any;
 
   before(() => {
     sandbox = sinon.createSandbox();
