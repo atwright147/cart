@@ -5,12 +5,8 @@ export interface ICartInput {
   quantity: number;
 }
 
-export interface ICartItem {
-  id: number;
+export interface ICartItem extends ICartInput {
   uuid: string;
-  name: string;
-  price: number;
-  quantity: number;
   subTotal: number;
 }
 
