@@ -1,21 +1,21 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
+    "target": "ESNext",
+    "module": "ESNext",
     "lib": [
       "es6",
       "es2015",
       "dom"
     ],
     "declaration": true,
-    "outDir": "lib",
+    "outDir": "dist",
     "rootDir": "src",
     "strict": true,
     "types": [
       "node",
       "mocha"
     ],
-    "esModuleInterop": true,
-    "resolveJsonModule": true
+    "moduleResolution": "node",
+    "esModuleInterop": true
   }
 }
