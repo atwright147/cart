@@ -1,4 +1,4 @@
-import * as nodeUuid from 'node-uuid';
+import { v1 as uuidv1 } from 'uuid';
 
 import { ICartInput, ICartItem, ICartItemAll } from '../interfaces/cart.interface';
 
@@ -42,7 +42,7 @@ export class Cart {
     if (!this.has(item.id)) {
       const itemToAdd: ICartItem = {
         ...item,
-        uuid: nodeUuid.v1(),
+        uuid: uuidv1(),
         subTotal: item.quantity * item.price,
       };
 
