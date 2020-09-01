@@ -2,6 +2,10 @@ import { v1 as uuidv1 } from 'uuid';
 
 import { ICartInput, ICartItem, ICartItemAll } from '../interfaces/cart.interface';
 
+type ByIdArg = { id: number, uuid?: never };
+type ByUuidArg = { uuid: string, id?: never };
+type ByUuidOrId = ByIdArg | ByUuidArg;
+
 export class Cart {
   private myItems = new Set<ICartItem>();
 
@@ -23,23 +27,38 @@ export class Cart {
       }, 0) as number;
   }
 
-  public has(id: number): boolean {
-    return !!Array.from(this.myItems)
-      .filter((item: ICartItem) => item.id === id).length;
+  public has(arg: ByUuidOrId): boolean {
+    let result = false;
+
+    /* istanbul ignore else */
+    if (arg.uuid) {
+      result = !!Array.from(this.myItems)
+        .filter((item: ICartItem) => item.uuid === arg.uuid).length;
+    } else if (arg.id) {
+      result = !!Array.from(this.myItems)
+        .filter((item: ICartItem) => item.id === arg.id).length;
+    }
+
+    return result;
   }
 
-  public getItemById(id: number): ICartItem {
-    return Array.from(this.myItems)
-      .filter((item: ICartItem) => item.id === id)[0] as ICartItem;
-  }
+  public get(arg: ByUuidOrId): ICartItem | null {
+    let result: ICartItem | null = null;
 
-  public getItemByUuid(uuid: string): ICartItem {
-    return Array.from(this.myItems)
-      .filter((item: ICartItem) => item.uuid === uuid)[0] as ICartItem;
+    /* istanbul ignore else */
+    if (arg.uuid) {
+      result = Array.from(this.myItems)
+        .filter((item: ICartItem) => item.uuid === arg.uuid)[0] as ICartItem;
+    } else if (arg.id) {
+      result = Array.from(this.myItems)
+        .filter((item: ICartItem) => item.id === arg.id)[0] as ICartItem;
+    }
+
+    return typeof result === 'undefined' ? null : result;
   }
 
   public add(item: ICartInput): void {
-    if (!this.has(item.id)) {
+    if (!this.has({ id: item.id })) {
       const itemToAdd: ICartItem = {
         ...item,
         uuid: uuidv1(),
@@ -58,10 +77,21 @@ export class Cart {
     }
   }
 
-  public remove(uuid: string): void {
-    const itemToRemove = Array.from(this.myItems)
-      .filter((item: ICartItem) => item.uuid === uuid)[0];
+  public remove(arg: ByUuidOrId): void {
+    let itemToRemove: ICartItem | null = null;
 
-    this.myItems.delete(itemToRemove);
+    /* istanbul ignore else */
+    if (arg.uuid) {
+      itemToRemove = Array.from(this.myItems)
+        .filter((item: ICartItem) => item.uuid === arg.uuid)[0];
+    } else if (arg.id) {
+      itemToRemove = Array.from(this.myItems)
+        .filter((item: ICartItem) => item.id === arg.id)[0];
+    }
+
+    /* istanbul ignore else */
+    if (itemToRemove) {
+      this.myItems.delete(itemToRemove);
+    }
   }
 }

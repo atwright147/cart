@@ -1,5 +1,8 @@
+/// <reference types="chai-exclude" />
+/// <reference types="@types/chai-uuid" />
+
 // tslint:disable:no-var-requires
-const chai = require('chai');
+const chai = require('chai') as Chai.ChaiStatic;
 chai.use(require('chai-exclude'));
 chai.use(require('chai-uuid'));
 // tslint:enable
@@ -15,18 +18,37 @@ describe('Cart', () => {
   });
 
   describe('has', () => {
-    it('should return boolean true if item exists', () => {
-      cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
-      cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+    describe('given a UUID', () => {
+      it('should return boolean true if item exists', () => {
+        cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
+        cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+        const uuid = cart.all.items[1].uuid;
 
-      expect(cart.has(2)).to.equal(true);
+        expect(cart.has({ uuid })).to.equal(true);
+      });
+
+      it('should return boolean false if item does not exist', () => {
+        cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
+        cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+
+        expect(cart.has({ uuid: 'made-up-uuid' })).to.equal(false);
+      });
     });
 
-    it('should return boolean false if item does not exist', () => {
-      cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
-      cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+    describe('given an ID', () => {
+      it('should return boolean true if item exists', () => {
+        cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
+        cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
 
-      expect(cart.has(3)).to.equal(false);
+        expect(cart.has({ id: 2 })).to.equal(true);
+      });
+
+      it('should return boolean false if item does not exist', () => {
+        cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
+        cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+
+        expect(cart.has({ id: 3 })).to.equal(false);
+      });
     });
   });
 
@@ -34,6 +56,7 @@ describe('Cart', () => {
     it('should generate a uuid', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
 
+      // @ts-ignore
       expect(cart.all.items[0].uuid).to.be.a.uuid('v1');
     });
 
@@ -43,7 +66,7 @@ describe('Cart', () => {
         cart.add({ id: 1, name: 'Item 1', quantity: 3, price: 10 });
         const uuid = cart.all.items[0].uuid;
 
-        expect(cart.getItemByUuid(uuid)).to.have.property('quantity', 4);
+        expect(cart.get({ uuid })).to.have.property('quantity', 4);
       });
 
       it('should calculate and overwrite the sub-total', () => {
@@ -72,19 +95,32 @@ describe('Cart', () => {
   });
 
   describe('remove', () => {
-    it('should remove the correct item', () => {
-      cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
-      cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
-      cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
-      const uuid = cart.all.items[1].uuid;
+    describe('given a UUID', () => {
+      it('should remove an item', () => {
+        cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
+        cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+        cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
+        const uuid = cart.all.items[1].uuid;
 
-      cart.remove(uuid);
-      expect(cart.length).to.equal(2);
+        cart.remove({ uuid });
+        expect(cart.length).to.equal(2);
+      });
+    });
+
+    describe('given an ID', () => {
+      it('should remove an item', () => {
+        cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
+        cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
+        cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
+
+        cart.remove({ id: 2 });
+        expect(cart.length).to.equal(2);
+      });
     });
   });
 
   describe('get length', () => {
-    it('should be 2', () => {
+    it('should return the correct number', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
 
@@ -118,26 +154,35 @@ describe('Cart', () => {
     });
   });
 
-  describe('getItemById', () => {
-    it('should return correct item by id', () => {
+  describe('get', () => {
+    beforeEach(() => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
-
-      const expected = { id: 2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
-      expect(cart.getItemById(2)).excludingEvery('uuid').to.deep.equal(expected);
     });
-  });
 
-  describe('getItemByUuid', () => {
-    it('should return correct item by uuid', () => {
-      cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
-      cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
-      cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
-      const uuid = cart.all.items[1].uuid;
+    describe('given a UUID', () => {
+      it('should return the correct item', () => {
+        const uuid = cart.all.items[1].uuid;
 
-      const expected = { id: 2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
-      expect(cart.getItemByUuid(uuid)).excludingEvery('uuid').to.deep.equal(expected);
+        const expected = { id: 2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
+        expect(cart.get({ uuid })).excludingEvery('uuid').to.deep.equal(expected);
+      });
+
+      it('should return null if the item does not exist', () => {
+        expect(cart.get({ uuid: 'made-up-uuid' })).to.equal(null);
+      });
+    });
+
+    describe('given an ID', () => {
+      it('should return the correct item', () => {
+        const expected = { id: 2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
+        expect(cart.get({ id: 2 })).excludingEvery('uuid').to.deep.equal(expected);
+      });
+
+      it('should return null if the item does not exist', () => {
+        expect(cart.get({ id: 42 })).to.equal(null);
+      });
     });
   });
 });
