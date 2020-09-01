@@ -1,30 +1,17 @@
-import { expect } from 'chai';
-import uuid from 'node-uuid';
-import sinon from 'sinon';
+// tslint:disable:no-var-requires
+const chai = require('chai');
+chai.use(require('chai-exclude'));
+chai.use(require('chai-uuid'));
+// tslint:enable
+const expect = chai.expect;
 
 import { Cart } from './cart';
 
 describe('Cart', () => {
   let cart: Cart;
-  let sandbox: sinon.SinonSandbox;
-  const mockUuid1 = 'mock0001-84b9-11e9-bef4-d1cc3df89c2f' as any;
-  const mockUuid2 = 'mock0002-84b9-11e9-bef4-d1cc3df89c2f' as any;
-  const mockUuid3 = 'mock0003-84b9-11e9-bef4-d1cc3df89c2f' as any;
-
-  before(() => {
-    sandbox = sinon.createSandbox();
-  });
-
-  afterEach(() => {
-    sandbox.restore();
-  });
 
   beforeEach(() => {
     cart = new Cart();
-    sandbox.stub(uuid, 'v1')
-      .onCall(0).returns(mockUuid1)
-      .onCall(1).returns(mockUuid2)
-      .onCall(2).returns(mockUuid3);
   });
 
   describe('has', () => {
@@ -47,15 +34,16 @@ describe('Cart', () => {
     it('should generate a uuid', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
 
-      expect(cart.all.items[0]).to.have.property('uuid', mockUuid1);
+      expect(cart.all.items[0].uuid).to.be.a.uuid('v1');
     });
 
     describe('given the item is already present in the cart', () => {
       it('should update the quantity of the existing item', () => {
         cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
         cart.add({ id: 1, name: 'Item 1', quantity: 3, price: 10 });
+        const uuid = cart.all.items[0].uuid;
 
-        expect(cart.getItemByUuid(mockUuid1)).to.have.property('quantity', 4);
+        expect(cart.getItemByUuid(uuid)).to.have.property('quantity', 4);
       });
 
       it('should calculate and overwrite the sub-total', () => {
@@ -88,8 +76,9 @@ describe('Cart', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
+      const uuid = cart.all.items[1].uuid;
 
-      cart.remove(mockUuid2);
+      cart.remove(uuid);
       expect(cart.length).to.equal(2);
     });
   });
@@ -119,13 +108,13 @@ describe('Cart', () => {
 
       const expected = {
         items: [
-          { id: 1, uuid: mockUuid1, name: 'Item 1', quantity: 1, price: 10, subTotal: 10 },
-          { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 },
+          { id: 1, name: 'Item 1', quantity: 1, price: 10, subTotal: 10 },
+          { id: 2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 },
         ],
         total: 20,
       };
 
-      expect(cart.all).to.deep.equal(expected);
+      expect(cart.all).excludingEvery('uuid').to.deep.equal(expected);
     });
   });
 
@@ -135,8 +124,8 @@ describe('Cart', () => {
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
 
-      const expected = { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
-      expect(cart.getItemById(2)).to.deep.equal(expected);
+      const expected = { id: 2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
+      expect(cart.getItemById(2)).excludingEvery('uuid').to.deep.equal(expected);
     });
   });
 
@@ -145,9 +134,10 @@ describe('Cart', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
       cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 10 });
       cart.add({ id: 3, name: 'Item 3', quantity: 1, price: 10 });
+      const uuid = cart.all.items[1].uuid;
 
-      const expected = { id: 2, uuid: mockUuid2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
-      expect(cart.getItemByUuid(mockUuid2)).to.deep.equal(expected);
+      const expected = { id: 2, name: 'Item 2', quantity: 1, price: 10, subTotal: 10 };
+      expect(cart.getItemByUuid(uuid)).excludingEvery('uuid').to.deep.equal(expected);
     });
   });
 });

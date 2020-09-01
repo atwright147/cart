@@ -19,13 +19,16 @@
           "name": "Mocha Tests",
           "program": "${workspaceRoot}/node_modules/.bin/_mocha",
           "args": [
-              "--opts", "${workspaceFolder}/mocha.opts",
               "-u", "bdd",
               "--timeout", "999999",
               "--colors",
               "--recursive",
               "${workspaceFolder}/src/**/*.spec.ts"
           ],
+          "env": {
+            "NODE_ENV": "test",
+            "TS_NODE_PROJECT": "tsconfig.test.json"
+          },
           "internalConsoleOptions": "openOnSessionStart"
       },
     ]
