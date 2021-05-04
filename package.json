@@ -18,7 +18,7 @@
     "test": "cross-env NODE_ENV=test TS_NODE_PROJECT='tsconfig.test.json' nyc mocha --exit"
   },
   "keywords": [],
-  "author": "Andy Wright <atwright147+oss@gmail.com",
+  "author": "Andy Wright <atwright147+cart@gmail.com",
   "license": "MIT",
   "devDependencies": {
     "@types/chai": "^4.2.17",
