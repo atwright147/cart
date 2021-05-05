@@ -1,11 +1,11 @@
 /// <reference types="chai-exclude" />
 /// <reference types="@types/chai-uuid" />
 
-// tslint:disable:no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
 const chai = require('chai') as Chai.ChaiStatic;
 chai.use(require('chai-exclude'));
 chai.use(require('chai-uuid'));
-// tslint:enable
+// eslint-enable
 const expect = chai.expect;
 
 import { Cart } from './cart';
@@ -56,7 +56,6 @@ describe('Cart', () => {
     it('should generate a uuid', () => {
       cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
 
-      // @ts-ignore
       expect(cart.all.items[0].uuid).to.be.a.uuid('v1');
     });
 
