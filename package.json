@@ -9,7 +9,6 @@
   "scripts": {
     "prebuild": "rimraf dist/*",
     "build": "microbundle --external none",
-    "start": "ts-node ./src/index.ts",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "typecheck": "tsc --project tsconfig.typecheck.json --noEmit",
     "coverage:lcov": "nyc report --reporter=lcovonly",
@@ -17,9 +16,16 @@
     "coverage": "npm run coverage:lcov && npm run coverage:json",
     "test": "cross-env NODE_ENV=test TS_NODE_PROJECT='tsconfig.test.json' nyc mocha --exit"
   },
-  "keywords": [],
+  "keywords": [
+    "cart",
+    "shopping",
+    "shopping cart"
+  ],
   "author": "Andy Wright <atwright147+cart@gmail.com",
   "license": "MIT",
+  "dependencies": {
+    "uuid": "^8.3.2"
+  },
   "devDependencies": {
     "@types/chai": "^4.2.17",
     "@types/chai-uuid": "^1.0.2",
@@ -43,7 +49,12 @@
     "tslint": "^6.1.3",
     "typescript": "^4.2.4"
   },
-  "dependencies": {
-    "uuid": "^8.3.2"
-  }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/atwright147/shopping-cart-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/atwright147/shopping-cart-ts/issues"
+  },
+  "homepage": "https://github.com/atwright147/shopping-cart-ts#readme"
 }
