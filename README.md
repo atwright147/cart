@@ -19,13 +19,13 @@ import { Cart } from '@atwright147/cart';
 const cart = new Cart();
 
 // add an item to the cart
-// `id` could be anything but I suggest using the id from your database
+// `id` could be anything but I suggest using the `id` from your database
 cart.add({ id: 1, name: 'Item 1', quantity: 1, price: 10 });
 cart.add({ id: 2, name: 'Item 2', quantity: 1, price: 5 });
 
-// check item is in the cart
-cart.has(1)  // true
-cart.has(3)  // false
+// check item is in the cart (returns a `boolean`)
+cart.has({ id: 1 })
+cart.has({ uuid: '<uuid>' })
 
 // check how many unique items are in the cart
 cart.length  // 2
@@ -46,10 +46,11 @@ cart.all  /* {
     total: 20
   } */
 
-// get items by id or UUID
-cart.getItemById(2)  // { id: 2, uuid: "<uuid2>", name: "Item 2", quantity: 2, price: 5, subTotal: 10 }
-cart.getItemByUuid('<uuid>')  // { id: 2, uuid: "<uuid2>", name: "Item 2", quantity: 2, price: 5, subTotal: 10 }
+// get items by `id` or `uuid`
+cart.get({ id: 1 })  // { id: 1, uuid: "<uuid1>", name: "Item 1", quantity: 2, price: 5, subTotal: 10 }
+cart.get({ uuid: '<uuid2>' })  // { id: 2, uuid: "<uuid2>", name: "Item 2", quantity: 2, price: 5, subTotal: 10 }
 
-// remove an item
-cart.remove('<uuid2>');  // remove row where uuid equals <uuid2>
+// remove an item by `id` or `uuid`
+cart.remove({ id: 1 });  // remove row where id equals 1
+cart.remove({ uuid: '<uuid2>' });  // remove row where uuid equals <uuid2>
 ```
