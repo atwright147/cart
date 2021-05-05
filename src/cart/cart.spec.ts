@@ -1,11 +1,10 @@
-/// <reference types="chai-exclude" />
-/// <reference types="@types/chai-uuid" />
+import chai from 'chai';
+import chaiExclude from 'chai-exclude';
+import chaiUuid from 'chai-uuid';
 
-/* eslint-disable @typescript-eslint/no-var-requires */
-const chai = require('chai') as Chai.ChaiStatic;
-chai.use(require('chai-exclude'));
-chai.use(require('chai-uuid'));
-// eslint-enable
+chai.use(chaiExclude);
+chai.use(chaiUuid);
+
 const expect = chai.expect;
 
 import { Cart } from './cart';
