@@ -14,7 +14,7 @@ export class Cart {
   }
 
   get all(): ICartItemAll {
-    const items = Array.from(this.myItems) as ICartItem[];
+    const items = Array.from(this.myItems) ;
     const total = this.total;
     return { items, total };
   }
@@ -24,7 +24,7 @@ export class Cart {
       .reduce((prev: number, curr: ICartItem) => {
         const currentTotal = Number(curr.price) * Number(curr.quantity);
         return prev + currentTotal;
-      }, 0) as number;
+      }, 0) ;
   }
 
   public has(arg: ByUuidOrId): boolean {
@@ -48,10 +48,10 @@ export class Cart {
     /* istanbul ignore else */
     if (arg.uuid) {
       result = Array.from(this.myItems)
-        .filter((item: ICartItem) => item.uuid === arg.uuid)[0] as ICartItem;
+        .filter((item: ICartItem) => item.uuid === arg.uuid)[0] ;
     } else if (arg.id) {
       result = Array.from(this.myItems)
-        .filter((item: ICartItem) => item.id === arg.id)[0] as ICartItem;
+        .filter((item: ICartItem) => item.id === arg.id)[0] ;
     }
 
     return typeof result === 'undefined' ? null : result;
@@ -68,7 +68,7 @@ export class Cart {
       this.myItems.add(itemToAdd);
     } else {
       const itemToUpdate = Array.from(this.myItems)
-        .filter((existingItem: ICartItem) => item.id === existingItem.id)[0] as ICartItem;
+        .filter((existingItem: ICartItem) => item.id === existingItem.id)[0] ;
 
       itemToUpdate.quantity = itemToUpdate.quantity + item.quantity;
       itemToUpdate.subTotal = itemToUpdate.quantity * itemToUpdate.price;
