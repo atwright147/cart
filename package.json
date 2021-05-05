@@ -2,10 +2,11 @@
   "name": "@atwright147/cart",
   "version": "1.0.0",
   "description": "A simple shopping cart for Node or Browser, written in TypeScript",
-  "main": "dist/index.js",
   "source": "src/index.ts",
+  "main": "dist/index.js",
   "module": "dist/cart.module.js",
   "unpkg": "dist/cart.umd.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist/*",
     "build": "microbundle --external none",
@@ -53,10 +54,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atwright147/shopping-cart-ts.git"
+    "url": "git+https://github.com/atwright147/cart.git"
   },
   "bugs": {
-    "url": "https://github.com/atwright147/shopping-cart-ts/issues"
+    "url": "https://github.com/atwright147/cart/issues"
   },
-  "homepage": "https://github.com/atwright147/shopping-cart-ts#readme"
+  "homepage": "https://github.com/atwright147/cart#readme"
 }
