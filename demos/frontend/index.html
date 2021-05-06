@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart Demo</title>
+</head>
+<body>
+  <h1>Cart Demo</h1>
+  <p>Open the Developer Tools to see what the code below returns</p>
+
+  <script src="../../dist/index.umd.js"></script>
+  <script>
+    const myCart = new cart.Cart();
+
+    myCart.add({ id: 123, name: 'Item 1', quantity: 3, price: 9.99 });
+    myCart.add({ id: 456, name: 'Item 2', quantity: 2, price: 10.99 });
+    myCart.add({ id: 789, name: 'Item 3', quantity: 1, price: 11.99 });
+
+    console.table(myCart.all.items);
+    console.table({ total: myCart.total, length: myCart.length });
+  </script>
+</body>
+</html>

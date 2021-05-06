@@ -14,6 +14,8 @@ npm i -S @atwright147/cart
 ## Usage
 
 ```js
+// node < v15 does not support `crypto.getRandomValues()`, so you must install this polyfill (modern browsers should be fine though)
+global.crypto = { getRandomValues: require('polyfill-crypto.getrandomvalues') };
 import { Cart } from '@atwright147/cart';
 
 const cart = new Cart();
@@ -54,3 +56,5 @@ cart.get({ uuid: '<uuid2>' })  // { id: 2, uuid: "<uuid2>", name: "Item 2", quan
 cart.remove({ id: 1 });  // remove row where id equals 1
 cart.remove({ uuid: '<uuid2>' });  // remove row where uuid equals <uuid2>
 ```
+
+Please refer to the included demos for working examples of CommonJS and UMD usage.
