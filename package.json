@@ -15,7 +15,7 @@
     "coverage:lcov": "nyc report --reporter=lcovonly",
     "coverage:json": "nyc report --reporter=json",
     "coverage": "npm run coverage:lcov && npm run coverage:json",
-    "test": "cross-env NODE_ENV=test TS_NODE_PROJECT='tsconfig.test.json' nyc mocha --exit"
+    "test": "cross-env NODE_ENV=test vitest --"
   },
   "keywords": [
     "cart",
@@ -25,32 +25,23 @@
   "author": "Andy Wright <atwright147+cart@gmail.com",
   "license": "MIT",
   "dependencies": {
-    "uuid": "^8.3.2"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.17",
-    "@types/chai-uuid": "^1.0.2",
-    "@types/mocha": "^8.2.2",
-    "@types/node": "^15.0.1",
-    "@types/node-uuid": "0.0.28",
-    "@types/sinon": "^10.0.0",
-    "@types/uuid": "^8.3.0",
-    "@typescript-eslint/eslint-plugin": "^4.22.1",
-    "@typescript-eslint/parser": "^4.22.1",
-    "chai": "^4.3.4",
-    "chai-exclude": "^2.0.3",
-    "chai-uuid": "^1.0.6",
-    "coveralls": "^3.1.0",
+    "@types/node": "^20.4.2",
+    "@types/uuid": "^9.0.2",
+    "@typescript-eslint/eslint-plugin": "^6.1.0",
+    "@typescript-eslint/parser": "^6.1.0",
+    "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
-    "eslint": "^7.25.0",
-    "microbundle": "^0.13.0",
-    "mocha": "^8.3.2",
+    "eslint": "^8.45.0",
+    "microbundle": "^0.15.1",
+    "mocha": "^10.2.0",
     "nyc": "^15.1.0",
-    "sinon": "^10.0.0",
-    "sinon-register": "^1.0.1",
-    "source-map-support": "^0.5.19",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.4"
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6",
+    "vitest": "^0.33.0"
   },
   "repository": {
     "type": "git",
