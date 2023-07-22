@@ -2,8 +2,9 @@
 
 A simple shopping cart for Node or Browser, written in TypeScript
 
-[![codecov](https://codecov.io/gh/atwright147/shopping-cart-ts/branch/master/graph/badge.svg)](https://codecov.io/gh/atwright147/shopping-cart-ts)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=atwright147_shopping-cart-ts&metric=alert_status)](https://sonarcloud.io/dashboard?id=atwright147_shopping-cart-ts)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=atwright147_cart)](https://sonarcloud.io/summary/new_code?id=atwright147_cart)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=atwright147_cart&metric=coverage)](https://sonarcloud.io/summary/new_code?id=atwright147_cart)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=atwright147_cart&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=atwright147_cart)
 
 ## Install
 
