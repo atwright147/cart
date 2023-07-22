@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v3
         with:
           node-version: 16
@@ -31,22 +33,22 @@ jobs:
           npm run build --if-present
           npm test
           npm run coverage
-          # /home/runner/work/shopping-cart-ts/shopping-cart-ts/src/cart/cart.ts
-          sed -i "s|SF:/.*/src/|SF:/github/workspace/src/|g" coverage/lcov.info
+          # # /home/runner/work/shopping-cart-ts/shopping-cart-ts/src/cart/cart.ts
+          # sed -i "s|SF:/.*/src/|SF:/github/workspace/src/|g" coverage/lcov.info
         env:
           CI: true
 
-      - name: Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.github_token }}
+      # - name: Coveralls
+      #   uses: coverallsapp/github-action@master
+      #   with:
+      #     github-token: ${{ secrets.github_token }}
 
-      - name: Codecov
-        uses: codecov/codecov-action@v1.0.3
-        with:
-          token: ${{secrets.CODECOV_TOKEN}}
-          file: ./coverage/coverage-final.json
-          flags: unittests
+      # - name: Codecov
+      #   uses: codecov/codecov-action@v1.0.3
+      #   with:
+      #     token: ${{secrets.CODECOV_TOKEN}}
+      #     file: ./coverage/coverage-final.json
+      #     flags: unittests
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master

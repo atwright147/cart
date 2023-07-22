@@ -12,9 +12,7 @@
     "build": "microbundle --external none",
     "lint": "eslint . --ext .ts",
     "typecheck": "tsc --project tsconfig.typecheck.json --noEmit",
-    "coverage:lcov": "nyc report --reporter=lcovonly",
-    "coverage:json": "nyc report --reporter=json",
-    "coverage": "npm run coverage:lcov && npm run coverage:json",
+    "coverage": "vitest run --coverage",
     "test": "cross-env NODE_ENV=test vitest --"
   },
   "keywords": [
@@ -32,6 +30,7 @@
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^6.1.0",
     "@typescript-eslint/parser": "^6.1.0",
+    "@vitest/coverage-v8": "^0.33.0",
     "coveralls": "^3.1.1",
     "cross-env": "^7.0.3",
     "eslint": "^8.45.0",
