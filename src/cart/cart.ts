@@ -14,82 +14,71 @@ export class Cart {
   }
 
   get all(): ICartItemAll {
-    const items = Array.from(this.myItems) ;
-    const total = this.total;
+    const { myItems, total } = this;
+    const items = [...myItems];
     return { items, total };
   }
 
   get total(): number {
-    return Array.from(this.myItems)
-      .reduce((prev: number, curr: ICartItem) => {
-        const currentTotal = Number(curr.price) * Number(curr.quantity);
-        return prev + currentTotal;
-      }, 0) ;
+    let total = 0;
+    for (const item of this.myItems) {
+      const currentTotal = Number(item.price) * Number(item.quantity);
+      total += currentTotal;
+    }
+    return total;
   }
 
   public has(arg: ByUuidOrId): boolean {
-    let result = false;
-
-    /* istanbul ignore else */
-    if (arg.uuid) {
-      result = !!Array.from(this.myItems)
-        .filter((item: ICartItem) => item.uuid === arg.uuid).length;
-    } else if (arg.id) {
-      result = !!Array.from(this.myItems)
-        .filter((item: ICartItem) => item.id === arg.id).length;
-    }
-
-    return result;
+    return Array.from(this.myItems).some((item: ICartItem) => {
+      if (arg.uuid) {
+        return item.uuid === arg.uuid;
+      } else if (arg.id) {
+        return item.id === arg.id;
+      }
+      return false;
+    });
   }
 
   public get(arg: ByUuidOrId): ICartItem | null {
-    let result: ICartItem | null = null;
+    const result = Array.from(this.myItems).find((item: ICartItem) => {
+      if (arg.uuid) {
+        return item.uuid === arg.uuid;
+      } else if (arg.id) {
+        return item.id === arg.id;
+      }
+    });
 
-    /* istanbul ignore else */
-    if (arg.uuid) {
-      result = Array.from(this.myItems)
-        .filter((item: ICartItem) => item.uuid === arg.uuid)[0] ;
-    } else if (arg.id) {
-      result = Array.from(this.myItems)
-        .filter((item: ICartItem) => item.id === arg.id)[0] ;
-    }
-
-    return typeof result === 'undefined' ? null : result;
+    return result || null;
   }
 
   public add(item: ICartInput): void {
-    if (!this.has({ id: item.id })) {
-      const itemToAdd: ICartItem = {
+    const existingItem = Array.from(this.myItems).find(
+      (existingItem: ICartItem) => item.id === existingItem.id
+    );
+
+    if (!existingItem) {
+      const newItem: ICartItem = {
         ...item,
         uuid: uuidv1(),
         subTotal: item.quantity * item.price,
       };
 
-      this.myItems.add(itemToAdd);
+      this.myItems.add(newItem);
     } else {
-      const itemToUpdate = Array.from(this.myItems)
-        .filter((existingItem: ICartItem) => item.id === existingItem.id)[0] ;
-
-      itemToUpdate.quantity = itemToUpdate.quantity + item.quantity;
-      itemToUpdate.subTotal = itemToUpdate.quantity * itemToUpdate.price;
-
-      this.myItems.add(itemToUpdate);
+      existingItem.quantity += item.quantity;
+      existingItem.subTotal = existingItem.quantity * existingItem.price;
     }
   }
 
   public remove(arg: ByUuidOrId): void {
-    let itemToRemove: ICartItem | null = null;
+    const itemToRemove = Array.from(this.myItems).find((item: ICartItem) => {
+      if (arg.uuid) {
+        return item.uuid === arg.uuid;
+      } else if (arg.id) {
+        return item.id === arg.id;
+      }
+    });
 
-    /* istanbul ignore else */
-    if (arg.uuid) {
-      itemToRemove = Array.from(this.myItems)
-        .filter((item: ICartItem) => item.uuid === arg.uuid)[0];
-    } else if (arg.id) {
-      itemToRemove = Array.from(this.myItems)
-        .filter((item: ICartItem) => item.id === arg.id)[0];
-    }
-
-    /* istanbul ignore else */
     if (itemToRemove) {
       this.myItems.delete(itemToRemove);
     }
