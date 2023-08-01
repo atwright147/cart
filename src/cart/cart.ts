@@ -35,7 +35,6 @@ export class Cart {
       } else if (arg.id) {
         return item.id === arg.id;
       }
-      return false;
     });
   }
 

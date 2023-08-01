@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+/* c8 ignore start */
 let start = '';
 const url = './demos/frontend/index.html';
 
@@ -20,3 +21,4 @@ switch (process.platform) {
 console.info(`${start} ${url}`);
 
 require('child_process').exec(`${start} ${url}`);
+/* c8 ignore end */
