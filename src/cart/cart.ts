@@ -47,7 +47,7 @@ export class Cart {
       }
     });
 
-    return result || null;
+    return result ?? null;
   }
 
   public add(item: ICartInput): void {
